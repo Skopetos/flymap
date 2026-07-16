@@ -7,8 +7,9 @@ const MISSED_POLL_LIMIT = 3;
 const GLIDE_MS = 4500;
 const ICON_SIZE = 22;
 
+// Airplane silhouette, nose pointing north (rotate(0) = up), matching `track`.
 const PLANE_PATH =
-  "M12 1 L16 9 L23 12.5 L16 14.5 L17 23 L12 19 L7 23 L8 14.5 L1 12.5 L8 9 Z";
+  "M21,16v-2l-8-5V3.5C13,2.67,12.33,2,11.5,2S10,2.67,10,3.5V9l-8,5v2l8-2.5V19l-2.5,1.5V22l4.5-1,4.5,1v-1.5L14,19v-5.5L21,16z";
 
 let center = { ...ATHENS };
 let radiusNm = 100;
@@ -26,9 +27,13 @@ const detailPanel = document.getElementById("detail-panel");
 const detailContent = document.getElementById("detail-content");
 const detailClose = document.getElementById("detail-close");
 
+// Zoomed in enough that a poll-to-poll aircraft move is actually visible:
+// at zoom 8 a 430kt jet shifts ~3px between polls (invisible); at 10, ~13px.
+const DEFAULT_ZOOM = 10;
+
 const map = L.map("map", { zoomControl: false, attributionControl: true }).setView(
   [center.lat, center.lon],
-  8
+  DEFAULT_ZOOM
 );
 L.control.zoom({ position: "bottomright" }).addTo(map);
 L.tileLayer(
@@ -215,7 +220,7 @@ radiusSelect.addEventListener("change", () => {
 locateBtn.addEventListener("click", () => {
   if (!navigator.geolocation) {
     center = { ...ATHENS };
-    map.setView([center.lat, center.lon], 8);
+    map.setView([center.lat, center.lon], DEFAULT_ZOOM);
     resetTracking();
     restartPolling();
     return;
@@ -223,13 +228,13 @@ locateBtn.addEventListener("click", () => {
   navigator.geolocation.getCurrentPosition(
     (pos) => {
       center = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-      map.setView([center.lat, center.lon], 9);
+      map.setView([center.lat, center.lon], DEFAULT_ZOOM + 1);
       resetTracking();
       restartPolling();
     },
     () => {
       center = { ...ATHENS };
-      map.setView([center.lat, center.lon], 8);
+      map.setView([center.lat, center.lon], DEFAULT_ZOOM);
       resetTracking();
       restartPolling();
     },
