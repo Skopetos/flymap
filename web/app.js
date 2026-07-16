@@ -44,7 +44,7 @@ L.tileLayer(
 function planeIcon(track) {
   return L.divIcon({
     className: "aircraft-icon",
-    html: `<svg viewBox="0 0 24 24" width="${ICON_SIZE}" height="${ICON_SIZE}" style="transform:rotate(${track || 0}deg)"><path d="${PLANE_PATH}"/></svg>`,
+    html: `<svg viewBox="0 0 24 24" width="${ICON_SIZE}" height="${ICON_SIZE}" style="transform:rotate(${track || 0}deg)"><path d="${PLANE_PATH}" fill="currentColor"/></svg>`,
     iconSize: [ICON_SIZE, ICON_SIZE],
     iconAnchor: [ICON_SIZE / 2, ICON_SIZE / 2],
   });
