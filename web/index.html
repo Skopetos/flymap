@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Air Traffic Tracker</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="map"></div>
+
+<div id="hud">
+  <div id="count-panel">
+    <span id="aircraft-count">0</span> aircraft
+    <span id="stale-indicator" class="hidden">stale data</span>
+  </div>
+  <div id="radius-panel">
+    <label for="radius-select">radius</label>
+    <select id="radius-select">
+      <option value="50">50 nm</option>
+      <option value="100" selected>100 nm</option>
+      <option value="250">250 nm</option>
+    </select>
+  </div>
+  <button id="locate-btn" title="Locate me">&#9678;</button>
+</div>
+
+<aside id="detail-panel" class="closed">
+  <button id="detail-close" title="Close">&times;</button>
+  <div id="detail-content"></div>
+</aside>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
